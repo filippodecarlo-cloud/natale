@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canti di Natale 🎄</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&family=Poppins:wght@300;400;600&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* --- STILI GENERALI --- */
+        :root {
+            --red: #b71c1c;
+            --green: #1b5e20;
+            --gold: #ffd700;
+            --cream: #fff8e1;
+            --text: #37474f;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--red);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            overflow-x: hidden;
+            /* Evita scroll orizzontale */
+        }
+
+        /* Effetto Neve Sfondo */
+        .snow-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .snowflake {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+
+        /* --- CONTENITORE PRINCIPALE --- */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: var(--cream);
+            min-height: 100vh;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* --- HEADER --- */
+        header {
+            background-color: var(--green);
+            color: var(--white);
+            text-align: center;
+            padding: 40px 20px;
+            border-bottom: 5px solid var(--gold);
+            position: relative;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-family: 'Mountains of Christmas', cursive;
+            font-size: 3.5rem;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* --- INDICE --- */
+        .index-section {
+            padding: 30px 20px;
+            background-color: var(--white);
+            border-bottom: 2px dashed var(--red);
+        }
+
+        h2 {
+            font-family: 'Mountains of Christmas', cursive;
+            color: var(--red);
+            text-align: center;
+            font-size: 2.5rem;
+            margin-top: 0;
+        }
+
+        .song-list {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .song-list li {
+            margin: 0;
+        }
+
+        .song-link {
+            display: block;
+            padding: 15px;
+            background-color: var(--cream);
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .song-link:hover {
+            background-color: var(--red);
+            color: var(--white);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .song-number {
+            background-color: var(--gold);
+            color: var(--red);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        /* --- CANZONI --- */
+        .lyrics-section {
+            padding: 20px;
+        }
+
+        .song-card {
+            background-color: var(--white);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            scroll-margin-top: 20px;
+            border-top: 4px solid var(--green);
+        }
+
+        .song-title {
+            font-family: 'Mountains of Christmas', cursive;
+            color: var(--green);
+            font-size: 2.2rem;
+            margin-top: 0;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
+        .song-author {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            margin-bottom: 25px;
+            font-size: 0.9rem;
+        }
+
+        .lyrics {
+            white-space: pre-wrap;
+            /* Mantiene a capo del testo */
+            text-align: center;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .chorus {
+            font-weight: 600;
+            color: var(--red);
+        }
+
+        /* --- PULSANTE TORNA SU (nella card) --- */
+        .card-footer {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px dashed #eee;
+        }
+
+        .back-to-index-btn {
+            display: inline-block;
+            padding: 8px 20px;
+            background-color: var(--green);
+            color: var(--white);
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-index-btn:hover {
+            background-color: var(--red);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* --- MENU FLOTTANTE --- */
+        .fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--gold);
+            color: var(--red);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            text-decoration: none;
+            z-index: 100;
+            transition: transform 0.3s;
+        }
+
+        .fab:hover {
+            transform: scale(1.1);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: var(--red);
+            color: var(--white);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .song-link {
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+
+            .lyrics {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Effetto Neve -->
+    <div class="snow-container" id="snow-container"></div>
+
+    <div class="container">
+        <header>
+            <h1>Canti di Natale</h1>
+            <div class="subtitle">Il libretto per cantare insieme</div>
+        </header>
+
+        <!-- Indice -->
+        <div class="index-section" id="top">
+            <h2>Indice</h2>
+            <ul class="song-list">
+                <li><a href="#song1" class="song-link"><span class="song-number">1</span>Tu scendi dalle stelle</a></li>
+                <li><a href="#song2" class="song-link"><span class="song-number">2</span>Astro del Ciel</a></li>
+                <li><a href="#song3" class="song-link"><span class="song-number">3</span>Venite Fedeli</a></li>
+                <li><a href="#song4" class="song-link"><span class="song-number">4</span>Gli Angeli delle Campagne</a>
+                </li>
+                <li><a href="#song5" class="song-link"><span class="song-number">5</span>Bianco Natale</a></li>
+                <li><a href="#song6" class="song-link"><span class="song-number">6</span>Gioia al Mondo</a></li>
+                <li><a href="#song7" class="song-link"><span class="song-number">7</span>Il Primo Natale</a></li>
+                <li><a href="#song8" class="song-link"><span class="song-number">8</span>Chi è questo Bimbo?</a></li>
+                <li><a href="#song9" class="song-link"><span class="song-number">9</span>Din Don Dan</a></li>
+                <li><a href="#song10" class="song-link"><span class="song-number">10</span>Metti un lume alla
+                        finestra</a></li>
+                <li><a href="#song11" class="song-link"><span class="song-number">11</span>Feliz Navidad</a></li>
+                <li><a href="#song12" class="song-link"><span class="song-number">12</span>We Wish You a Merry
+                        Christmas</a></li>
+                <li><a href="#song13" class="song-link"><span class="song-number">13</span>Ninna Nanna (Medjugorje)</a>
+                </li>
+                <li><a href="#song14" class="song-link"><span class="song-number">14</span>Oh Happy Day</a></li>
+                <li><a href="#song15" class="song-link"><span class="song-number">15</span>Blue Christmas</a></li>
+            </ul>
+        </div>
+
+        <!-- Canzoni -->
+        <div class="lyrics-section">
+
+            <!-- 1. TU SCENDI DALLE STELLE -->
+            <div class="song-card" id="song1">
+                <h3 class="song-title">Tu scendi dalle stelle</h3>
+                <div class="song-author">S. Alfonso Maria de' Liguori</div>
+                <div class="lyrics">
+                    Tu scendi dalle stelle, O Re del Cielo,
+                    e vieni in una grotta al freddo e al gelo. (2 v.)
+
+                    <span class="chorus">O Bambino mio Divino,
+                        io ti vedo qui a tremar;
+                        O Dio beato!
+                        Ah, quanto ti costò l'avermi amato! (2 v.)</span>
+
+                    A te che sei del mondo il Creatore,
+                    mancano panni e fuoco, O mio Signore. (2 v.)
+
+                    <span class="chorus">Caro eletto pargoletto,
+                        quanto questa povertà più m'innamora,
+                        giacché ti fece amor povero ancora. (2 v.)</span>
+                </div>
+                <div class="card-footer">
+                    <a href="#top" class="back-to-index-btn">Torna all'indice ⬆</a>
+                </div>
+                <div class="card-footer">
+                    <a href="#top" class="back-to-index-btn">Torna all'indice ⬆</a>
+                </div>
+            </div>
+
+            <!-- 2. ASTRO DEL CIEL -->
+            <div class="song-card" id="song2">
+                <h3 class="song-title">Astro del Ciel</h3>
+                <div class="song-author">Gruber - Mohr</div>
+                <div class="lyrics">
+                    Astro del Ciel, Pargol divin,
+                    mite Agnello Redentor!
+                    Tu che i Vati da lungi sognar,
+                    Tu che angeliche voci annunziar,
+                    <span class="chorus">Luce dona alle genti,
+                        pace infondi nei cuor! (2 v.)</span>
+
+                    Astro del Ciel, Pargol divin,
+                    mite Agnello Redentor!
+                    Tu di stirpe regale decor,
+                    Tu virgineo, mistico fior,
+                    <span class="chorus">Luce dona alle genti,
+                        pace infondi nei cuor! (2 v.)</span>
+
+                    Astro del Ciel, Pargol divin,
+                    mite Agnello Redentor!
+                    Tu disceso a scontare l'error,
+                    Tu sol nato a parlare d'amor,
+                    <span class="chorus">Luce dona alle genti,
+                        pace infondi nei cuor! (2 v.)</span>
+                </div>
+                <div class="card-footer">
+                    <a href="#top" class="back-to-index-btn">Torna all'indice ⬆</a>
+                </div>
+            </div>
+
+            <!-- 3. VENITE FEDELI -->
+            <div class="song-card" id="song3">
+                <h3 class="song-title">Venite Fedeli</h3>
+                <div class="song-author">Adeste Fideles</div>
+                <div class="lyrics">
+                    Venite, fedeli, l'angelo ci invita,
+                    venite, venite a Betlemme.
+                    Nasce per noi Cristo Salvatore.
+
+                    <span class="chorus">Venite, adoriamo,
+                        venite, adoriamo,
+                        venite, adoriamo il Signore Gesù!</span>
+
+                    La luce del mondo brilla in una grotta:
+                    la fede ci guida a Betlemme.
+                    Nasce per noi Cristo Salvatore.
+
+                    <span class="chorus">Venite, adoriamo...</span>
+
+                    La notte risplende, tutto il mondo attende:
+                    seguite i pastori a Betlemme.
+                    Nasce per noi Cristo Salvatore.
+
+                    <span class="chorus">Venite, adoriamo...</span>
+                </div>
+                <div class="card-footer">
+                    <a href="#top" class="back-to-index-btn">Torna all'indice ⬆</a>
+                </div>
+            </div>
+
+            <!-- 4. GLI ANGELI DELLE CAMPAGNE -->
+            <div class="song-card" id="song4">
+                <h3 class="song-title">Gli Angeli delle Campagne</h3>
+                <div class="song-author">Tradizionale Francese</div>
+                <div class="lyrics">
+                    Gli angeli nelle campagne
+                    cantan l'inno del Signor,
+                    e l'eco delle montagne
+                    ripete il loro canto d'or.
+
+                    <span class="chorus">Glo----------ria, in excelsis De-o!
+                        Glo----------ria, in excelsis De-o!</span>
+
+                    O pastori che cantate
+                    il liete annuncio di Natal?
+                    Quale festa celebrate?
+                    Qual è il Mistero trionfal?
+
+                    <span class="chorus">Glo----------ria...</span>
+
+                    È nato il Signore degli angeli,
+                    il Re della terra e del ciel.
+                    L'Eterno si è fatto bambino,
+                    in questa notte di Natal.
+
+                    <span class="chorus">Glo----------ria...</span>
+                </div>
+                <div class="card-footer">
+                    <a href="#top" class="back-to-index-btn">Torna all'indice ⬆</a>
+                </div>
+            </div>
+
+            <!-- 5. BIANCO NATALE -->
+            <div class="song-card" id="song5">
+                <h3 class="song-title">Bianco Natale</h3>
+                <div class="song-author">White Christmas</div>
+                <div class="lyrics">
+                    Col bianco tuo candor, neve,
+                    sai dar la gioia ad ogni cuor.
+                    È Natale ancora, la grande festa
+                    che sa tutti conquistar.
+
+                    Un canto vien dal ciel, lento,
+                    e con la neve dona a noi
+                    un Natale pieno d'amor,
+                    un Natale di felicità.
+
+                    Quel lieve tuo candor, neve,
+                    discende lieto nel mio cuor.
+                    Nella notte santa, il cuore esulta
+                    d'amor, è Natale ancor.
+
+                    (Ripete)
+                    Un canto vien dal ciel...
+                </div>
+                <div class="card-footer">
+                    <a href="#top" class="back-to-index-btn">Torna all'indice ⬆</a>
+                </div>
+            </div>
+
+            <!-- 6. GIOIA AL MONDO -->
+            <div class="song-card" id="song6">
+                <h3 class="song-title">Gioia al Mondo</h3>
+                <div class="song-author">Joy to the World</div>
+                <div class="lyrics">
+                    Gioia al mondo! È nato il Re,
+                    il Signor è qui!
+                    <span class="chorus">Sia gloria in terra e in ciel,
+                        sia gloria in terra e in ciel,
+                        sia gloria, sia gloria in terra e in ciel!</span>
+
+                    Gioia al mondo! Il Salvador,
+                    regna sul cuor!
+                    <span class="chorus">S'innalzi un canto a Lui,
+                        s'innalzi un canto a Lui,
+                        s'innalzi, s'innalzi un canto a Lui!</span>
+
+                    Egli regna con verità,
+                    e con grazia e amor!
+                    <span class="chorus">Sia gloria in terra e in ciel,
+                        sia gloria in terra e in ciel,
+                        sia gloria, sia gloria in terra e in ciel!</span>
+                </div>
+                <div class="card-footer">
+                    <a href="#top" class="back-to-index-btn">Torna all'indice ⬆</a>
+                </div>
+            </div>
+
+            <!-- 7. IL PRIMO NATALE -->
+            <div class="song-card" id="song7">
+                <h3 class="song-title">Il Primo Natale</h3>
+                <div class="song-author">The First Nowell</div>
+                <div class="lyrics">
+                    Un angelo apparve a dei pastor,
+                    e la gran luce li illuminò;
+                    di greggi la guardia facevan allor
+                    in quella notte piena d'or.
+
+                    <span class="chorus">Noel, Noel, Noel, Noel!
+                        È nato il Re d'Israel!</span>
+
+                    Guardarono in alto nel cielo lontan,
+                    videro splendere un astro sovran;
+                    la stella diffonde la luce del ciel,
+                    nel mondo è nato l'Emmanuele.
+
+                    <span class="chorus">Noel, Noel, Noel, Noel!
+                        È nato il Re d'Israel!</span>
+                </div>
+                <div class="card-footer">
+                    <a href="#top" class="back-to-index-btn">Torna all'indice ⬆</a>
+                </div>
+            </div>
+
+            <!-- 8. CHI È QUESTO BIMBO -->
+            <div class="song-card" id="song8">
+                <h3 class="song-title">Chi è questo Bimbo?</h3>
+                <div class="song-author">Greensleeves</div>
+                <div class="lyrics">
+                    Chi è questo Bimbo che riposa
+                    sulle ginocchia di Maria?
+                    Per Lui gli angeli cantano
+                    dolci inni e melodie.
+
+                    <span class="chorus">Egli è Cristo, il Signor,
+                        che i pastori vegliano.
+                        Venite, presto, ad adorar
+                        il Figlio di Maria.</span>
+
+                    Perché in un'umile stalla
+                    Il bambino riposa così?
+                    Perché i peccatori l'amor
+                    ricevan da Lui che è qui.
+
+                    <span class="chorus">Egli è Cristo, il Signor...</span>
+                </div>
+                <div class="card-footer">
+                    <a href="#top" class="back-to-index-btn">Torna all'indice ⬆</a>
+                </div>
+            </div>
+
+            <!-- 9. DIN DON DAN -->
+            <div class="song-card" id="song9">
+                <h3 class="song-title">Din Don Dan</h3>
+                <div class="song-author">Jingle Bells</div>
+                <div class="lyrics">
+                    La notte di Natal è festa per noi,
+                    scendiamo giù nel pian
+                    sugli sci veloci andiam!
+
+                    La neve è bianca al sol, il cielo è tutto blu,
+                    c'è tanta gioia in ogni cuor
+                    la tristezza non c'è più!
+
+                    <span class="chorus">Din don dan, din don dan,
+                        din don dan din don!
+                        Suona allegro il campanil
+                        è Natale in ogni cuor! (Ehi!)
+
+                        Din don dan, din don dan,
+                        din don dan din don!
+                        Suona allegro il campanil
+                        è Natale in ogni cuor!</span>
+
+                    Scendiamo giù nel pian
+                    sugli sci veloci andiam,
+                    la neve è bianca al sol
+                    e il cielo è tutto blu!
+                </div>
+                <div class="card-footer">
+                    <a href="#top" class="back-to-index-btn">Torna all'indice ⬆</a>
+                </div>
+            </div>
+
+            <!-- 10. METTI UN LUME -->
+            <div class="song-card" id="song10">
+                <h3 class="song-title">Metti un lume alla finestra</h3>
+                <div class="song-author">Deck the Halls</div>
+                <div class="lyrics">
+                    Metti un lume alla finestra,
+                    Fa la la la la, la la la la.
+                    Per la notte di Natale,
+                    Fa la la la la, la la la la.
+                    Già la neve scende giù,
+                    Fa la la, fa la la, la la la.
+                    È Natale, è nato Gesù!
+                    Fa la la la la, la la la la.
+
+                    Addobbiamo l'alberello,
+                    Fa la la la la, la la la la.
+                    Con le luci e col vischio,
+                    Fa la la la la, la la la la.
+                    Tutti insieme a festeggiar,
+                    Fa la la, fa la la, la la la.
+                    La gran festa del Natal!
+                    Fa la la la la, la la la la.
+                </div>
+                <div class="card-footer">
+                    <a href="#top" class="back-to-index-btn">Torna all'indice ⬆</a>
+                </div>
+            </div>
+
+            <!-- 11. FELIZ NAVIDAD -->
+            <div class="song-card" id="song11">
+                <h3 class="song-title">Feliz Navidad</h3>
+                <div class="song-author">José Feliciano</div>
+                <div class="lyrics">
+                    Feliz Navidad,
+                    Feliz Navidad,
+                    Feliz Navidad,
+                    prospero año y felicidad. (2 v.)
+
+                    I wanna wish you a Merry Christmas,
+                    I wanna wish you a Merry Christmas,
+                    I wanna wish you a Merry Christmas,
+                    from the bottom of my heart. (2 v.)
+
+                    (Ripete dall'inizio)
+                </div>
+                <div class="card-footer">
+                    <a href="#top" class="back-to-index-btn">Torna all'indice ⬆</a>
+                </div>
+            </div>
+
+            <!-- 12. WE WISH YOU -->
+            <div class="song-card" id="song12">
+                <h3 class="song-title">We Wish You a Merry Christmas</h3>
+                <div class="song-author">Tradizionale Inglese</div>
+                <div class="lyrics">
+                    We wish you a Merry Christmas,
+                    We wish you a Merry Christmas,
+                    We wish you a Merry Christmas,
+                    And a Happy New Year!
+
+                    Good tidings we bring
+                    To you and your kin;
+                    Good tidings for Christmas
+                    And a Happy New Year!
+
+                    (Ripete)
+                </div>
+                <div class="card-footer">
+                    <a href="#top" class="back-to-index-btn">Torna all'indice ⬆</a>
+                </div>
+            </div>
+
+            <!-- 13. NINNA NANNA -->
+            <div class="song-card" id="song13">
+                <h3 class="song-title">Ninna Nanna a Gesù Bambino</h3>
+                <div class="song-author">Figli del Divino Amore (Medjugorje)</div>
+                <div class="lyrics">
+                    Caro Bambin Gesù la ninna nanna
+                    risuona dolce per te nella capanna,
+                    la ninna nanna che sa cantar la tua mamma,
+                    canta con gli angeli in ciel osanna osanna,
+                    la ninna nanna che sa cantar la tua mamma,
+                    canta con gli angeli in ciel osanna osanna.
+
+                    Guardando il viso sì dolce e tanto sereno
+                    la mamma con grande amor ti stringe al seno,
+                    e nel suo cuore risuona come una voce
+                    quel bimbo grande sarà ma sulla croce,
+                    e nel suo cuore risuona come una voce
+                    quel bimbo grande sarà ma sulla croce.
+
+                    In terra e in cielo per te tutto sembra cantare,
+                    son ninna nanna d'amor per ringraziare
+                    la ninna nanna che sa cantar la tua mamma,
+                    canta con gli angeli in cor osanna osanna,
+                    la ninna nanna che sa cantar la tua mamma,
+                    canta con gli angeli in cor osanna osanna.
+                </div>
+                <div class="card-footer">
+                    <a href="#top" class="back-to-index-btn">Torna all'indice ⬆</a>
+                </div>
+            </div>
+
+            <!-- 14. OH HAPPY DAY -->
+            <div class="song-card" id="song14">
+                <h3 class="song-title">Oh Happy Day</h3>
+                <div class="song-author">Edwin Hawkins Singers</div>
+                <div class="lyrics">
+                    Oh happy day (Oh happy day)
+                    Oh happy day (Oh happy day)
+                    When Jesus washed (When Jesus washed)
+                    When Jesus washed (When Jesus washed)
+                    When Jesus washed (When Jesus washed)
+                    He washed my sins away (Oh happy day)
+                    Oh happy day (Oh happy day)
+
+                    (Soloist)
+                    He taught me how to watch, fight and pray,
+                    fight and pray!
+                    And live rejoicing every day,
+                    every day!
+
+                    Oh happy day (Oh happy day)
+                    Oh happy day (Oh happy day)
+                    When Jesus washed (When Jesus washed)
+                    When Jesus washed (When Jesus washed)
+                    When Jesus washed (When Jesus washed)
+                    He washed my sins away (Oh happy day)
+                    Oh happy day (Oh happy day)
+                </div>
+                <div class="card-footer">
+                    <a href="#top" class="back-to-index-btn">Torna all'indice ⬆</a>
+                </div>
+            </div>
+
+            <!-- 15. BLUE CHRISTMAS -->
+            <div class="song-card" id="song15">
+                <h3 class="song-title">Blue Christmas</h3>
+                <div class="song-author">Hayes & Johnson</div>
+                <div class="lyrics">
+                    I'll have a Blue Christmas without you
+                    I'll be so blue just thinking 'bout you.
+                    Decorations of red on a green Christmas tree
+                    won't mean a thing if you're not here with me.
+
+                    I'll have a Blue Christmas that's certain
+                    And when that blue heartache starts hurtin'
+                    You'll be doin' all right with your Christmas of white
+                    But I'll have a blue, blue Christmas.
+
+                    (Repeat)
+                    You'll be doin' all right with your Christmas of white
+                    But I'll have a blue, blue Christmas.
+                </div>
+                <div class="card-footer">
+                    <a href="#top" class="back-to-index-btn">Torna all'indice ⬆</a>
+                </div>
+            </div>
+
+        </div> <!-- Fine Lyrics Section -->
+
+        <footer>
+            <p>Fatto con ❤️ per un Natale Speciale</p>
+        </footer>
+
+    </div>
+
+    <!-- Bottone Torna Su -->
+    <a href="#top" class="fab" title="Torna all'indice">⬆</a>
+
+    <!-- Script Neve -->
+    <script>
+        function createSnowflake() {
+            const snowflake = document.createElement('div');
+            snowflake.classList.add('snowflake');
+
+            // Random position and size
+            snowflake.style.left = Math.random() * 100 + 'vw';
+            snowflake.style.animationDuration = Math.random() * 3 + 2 + 's';
+            snowflake.style.opacity = Math.random();
+            snowflake.style.width = snowflake.style.height = Math.random() * 5 + 5 + 'px';
+
+            document.getElementById('snow-container').appendChild(snowflake);
+
+            // Remove after animation
+            setTimeout(() => {
+                snowflake.remove();
+            }, 5000);
+        }
+
+        // Create a snowflake every 200ms
+        setInterval(createSnowflake, 200);
+    </script>
+</body>
+
+</html>
