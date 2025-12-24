@@ -8,8 +8,9 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&family=Poppins:wght@300;400;600&display=swap"
-    rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&family=Poppins:wght@300;400;600&display=swap"
+        rel="stylesheet">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#1b5e20">
     <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3504/3504787.png">
@@ -23,6 +24,23 @@
             --cream: #fff8e1;
             --text: #37474f;
             --white: #ffffff;
+            --card-bg: #ffffff;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        [data-theme="dark"] {
+            --red: #ff8a80;
+            /* Lighter red for dark mode */
+            --green: #81c784;
+            /* Lighter green for dark mode */
+            --gold: #ffd54f;
+            --cream: #121212;
+            /* Dark Background */
+            --text: #e0e0e0;
+            --white: #1e1e1e;
+            /* Card Background */
+            --card-bg: #1e1e1e;
+            --shadow: rgba(0, 0, 0, 0.7);
         }
 
         body {
@@ -33,7 +51,7 @@
             padding: 0;
             line-height: 1.6;
             overflow-x: hidden;
-            /* Evita scroll orizzontale */
+            transition: background-color 0.3s, color 0.3s;
         }
 
         /* Effetto Neve Sfondo */
@@ -309,6 +327,8 @@
 
     <div class="container">
         <header>
+            <button id="theme-toggle" aria-label="Attiva modalità notte"
+                style="position: absolute; top: 20px; right: 20px; background: none; border: none; font-size: 1.5rem; cursor: pointer;">🌙</button>
             <h1>Canti di Natale</h1>
             <div class="subtitle">Il libretto per cantare insieme</div>
         </header>
@@ -862,6 +882,30 @@
                     });
             });
         }
+
+        // Night Mode Logic
+        const toggleBtn = document.getElementById('theme-toggle');
+        const root = document.documentElement;
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            root.setAttribute('data-theme', 'dark');
+            toggleBtn.textContent = '☀️';
+        }
+
+        toggleBtn.addEventListener('click', () => {
+            const currentTheme = root.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                root.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+                toggleBtn.textContent = '🌙';
+            } else {
+                root.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                toggleBtn.textContent = '☀️';
+            }
+        });
     </script>
 </body>
 
